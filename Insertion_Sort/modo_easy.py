@@ -5,13 +5,10 @@ def insert_sort(l):
         a = i-1
 
         while a >= 0 and valor < l[a]:
-            l[a + 1] = l[a]
-            a-=1
-            print(l)
-            
-        l[a + 1] = valor
-    return l
-        
+            l[a + 1], l[a] = l[a], l[a + 1]
+            a-=1 
+                       
+    return l        
 
 l = [4, 3, 2, 0]
 # l = [1, 2, 3, 4, 5]
