@@ -17,30 +17,23 @@ def lista_imprime(lista):
         print(atual.info)
         atual = atual.prox
 
-def insertion_sort(lista):
-    if lista is None or lista.prox is None:
-        return lista  
+def insertion_sort(lst):
+    if lst is None or lst.prox is None:
+        return lst  
     
-    lista_ordenada = None  
+    atual = lst.prox  
+    while atual is not None:
 
-    while lista is not None:
-        atual = lista  
-        lista = lista.prox  
-        
-        if lista_ordenada is None or atual.info < lista_ordenada.info:
-          
-            atual.prox = lista_ordenada
-            lista_ordenada = atual
-        else:
+        atual2 = atual.ante  
+        while atual2 is not None and atual2.info > atual.info:
             
-            busca = lista_ordenada
-            while busca.prox is not None and busca.prox.info < atual.info:
-                busca = busca.prox
+            atual2.info, atual.info = atual.info, atual2.info
+            atual = atual2  
+            atual2 = atual2.ante  
             
-            atual.prox = busca.prox
-            busca.prox = atual
+        atual = atual.prox  
     
-    return lista_ordenada  
+    return lst  
     
 lista = None
 lista = insere_lista(lista, 4)
@@ -52,6 +45,10 @@ lista = insere_lista(lista, 100)
 
 lista_imprime(lista)
 
+lista = insertion_sort(lista)
+
+print("\n::Ordenada::")
+lista_imprime(lista)
 lista = insertion_sort(lista)
 
 print("\n::Ordenada::")
