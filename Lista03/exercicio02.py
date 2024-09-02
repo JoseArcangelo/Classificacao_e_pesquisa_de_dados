@@ -14,7 +14,7 @@ def bouble_sort(l):
         if ordenado == 0:
             fim = time.time()
 
-            print("TEMPO DE EXECUÇÃO: ", fim - inicio )
+            print(f"TEMPO DE EXECUÇÃO: {fim - inicio:.10f} segundos")
 
             return l
 
@@ -31,25 +31,26 @@ def insert_sort(l):
             a-=1 
 
     fim = time.time()
-    print("TEMPO DE EXECUÇÃO: ", fim - inicio )
+    print(f"TEMPO DE EXECUÇÃO: {fim - inicio:.10f} segundos")
 
     return l 
 
 def selection_sort(l):
-  inicio = time.time()
+    inicio = time.time()
 
-  for a in range(len(l)):
-    posicao_menor = a
-    for b in range(a + 1, len(l)):
-      if l[b] < l[posicao_menor]:
-        posicao_menor = b
+    for a in range(len(l)):
+        posicao_menor = a
+        for b in range(a + 1, len(l)):
+            if l[b] < l[posicao_menor]:
+                posicao_menor = b
 
     if posicao_menor != a:
-      l[a], l[posicao_menor] = l[posicao_menor], l[a]
-  fim = time.time()
-  print("TEMPO DE EXECUÇÃO: ", fim - inicio )
+        l[a], l[posicao_menor] = l[posicao_menor], l[a]
 
-  return l
+    fim = time.time()
+    print(f"TEMPO DE EXECUÇÃO: {fim - inicio:.10f} segundos")
+
+    return l
 
 def merge_sort(l):
     if len(l) <= 1:
@@ -83,6 +84,48 @@ def juntar(esq, dir):
 
     return l
 
+def shell_sort(lst, pulos):
+    inicio = time.time()
+
+    while pulos > 0:
+        for i in range(pulos, len(lst)):
+            valor_atual = lst[i]
+            j = i
+            
+            while j >= pulos and lst[j - pulos] > valor_atual:
+                lst[j] = lst[j - pulos]
+                j -= pulos
+            
+            lst[j] = valor_atual
+        
+        pulos //= 2
+    
+    fim = time.time()
+    print(f"TEMPO DE EXECUÇÃO: {fim - inicio:.10f} segundos")
+    return lst
+
+def particiona(lst, inicio, fim):
+    pivo = inicio
+    esq = inicio + 1
+    dir = fim
+    
+    while esq <= dir:
+        while esq <= fim and lst[esq] <= lst[pivo]:
+            esq += 1
+        while lst[dir] > lst[pivo]:
+            dir -= 1
+        if esq < dir:
+            lst[esq], lst[dir] = lst[dir], lst[esq]
+    
+    lst[dir], lst[pivo] = lst[pivo], lst[dir]
+    return dir
+
+def quick_sort(lst, inicio, fim):
+    if inicio < fim:
+        pivo_index = particiona(lst, inicio, fim)
+        quick_sort(lst, inicio, pivo_index - 1)
+        quick_sort(lst, pivo_index + 1, fim)
+
 def main():
     l = [random.randint(1, 1000) for _ in range(2000)] ##Aleatorios
     # l = [i //2 for i in range(2000)] ##Duplicados
@@ -90,24 +133,40 @@ def main():
     # l = [i for i in range(5000, 0, -1)] ##Inverso
 
     while(True):
-      print("\n 1-Buble Sort" +
+        print("\n 1-Buble Sort" +
         "\n 2-Insert Sort" +
         "\n 3-Selection Sort" + 
-        "\n 4-Merge Sort")
-          
-      opc = input("Escolha uma opcção: ")
-      if opc == "1":
-         bouble_sort(l)
-      elif opc == "2":
-         insert_sort(l)
-      elif opc == "3":
-         selection_sort(l)
-      elif opc == "4":
-        inicio = time.time()
-        merge_sort(l)
-        fim = time.time()
-        print("TEMPO DE EXECUÇÃO: ", fim - inicio )
-      else:
-         break
+        "\n 4-Merge Sort" + 
+        "\n 5-Shell Sort" + 
+        "\n 6-Quick Sort")
+            
+        opc = input("Escolha uma opção: ")
+        if opc == "1":
+            bouble_sort(l)
+
+        elif opc == "2":
+            insert_sort(l)
+
+        elif opc == "3":
+            selection_sort(l)
+
+        elif opc == "4":
+            inicio = time.time()
+            merge_sort(l)
+            fim = time.time()
+            print(f"TEMPO DE EXECUÇÃO: {fim - inicio:.10f} segundos")
+
+        elif opc == "5":
+            l = shell_sort(l, len(l) // 2)
+
+        elif opc == "6":
+            inicio = time.time()
+            quick_sort(l, 0, len(l) - 1)
+            fim = time.time()
+            print(f"TEMPO DE EXECUÇÃO: {fim - inicio:.10f} segundos")
+
+
+        else:
+            break
         
 main()
