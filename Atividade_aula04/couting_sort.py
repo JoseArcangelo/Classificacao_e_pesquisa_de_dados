@@ -1,3 +1,6 @@
+# 1 - Criar o array de contagem que tera tamanho igual ao maior elemento do array
+# 2 - Contar a frequencia dos elementos
+
 def couting_sort(lst):
   maior_elemento = 0
 
@@ -20,8 +23,9 @@ def couting_sort(lst):
   for i in range(len(lst) - 1, -1, -1):
     l[l_counter[lst[i] - 1] - 1] = lst[i]
     l_counter[lst[i] - 1] -= 1
-  print(l)
+  
+  return l
 
 lst = [3, 2, 4, 7, 4, 7, 1, 2, 3]
-couting_sort(lst)
-
+l = couting_sort(lst)
+print(l)
