@@ -1,6 +1,7 @@
 # 1 - Criar o array de contagem que tera tamanho igual ao maior elemento do array
 # 2 - Contar a frequencia dos elementos
 
+
 def couting_sort(lst):
   maior_elemento = 0
 
