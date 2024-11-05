@@ -47,3 +47,4 @@ def busca_binaria_recursiva(lista, elemento, inicio=0, fim=None):
 l = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] 
 print(busca_binaria_iterativa(l, 5))
 print(busca_binaria_recursiva(l, 8))
+print(busca_binaria_interpolacao(l, 7))
