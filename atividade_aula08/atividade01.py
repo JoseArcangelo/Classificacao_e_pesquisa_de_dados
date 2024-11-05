@@ -1,3 +1,18 @@
+def busca_binaria_interpolacao(lista, elemento):
+    inicio = 0
+    fim = len(lista) - 1
+
+    while inicio <= fim:  
+        meio = int(inicio + ((fim - inicio) * (elemento - lista[inicio])) / (lista[fim] - lista[inicio]))
+
+        if meio < inicio or meio > fim:  
+            return -1
+
+        if lista[meio] == elemento:
+            return meio  
+        
+        return -1
+
 def busca_binaria_iterativa(lista, elemento):
     inicio = 0
     fim = len(lista) - 1
