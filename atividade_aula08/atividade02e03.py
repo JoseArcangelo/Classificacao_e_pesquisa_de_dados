@@ -18,6 +18,7 @@ def busca_por_salto(lista, elemento):
 
     return False 
 
+# OBS: Tive um pouco de dificuldade com esse algoritimo. 
 def busca_fibonacci(lista, elemento):
     tamanho = len(lista)
     
