@@ -60,7 +60,6 @@ def remove(arv, valor):
     
     return arv
 
-# Inserindo produtos na árvore
 arvore = None
 produtos = [
     {'id': 1, 'nome': 'Produto A', 'descricao': 'Descrição do Produto A', 'preco': 10.0},
@@ -89,7 +88,7 @@ while(True):
         produto = {'id': id, 'nome': nome, 'descricao': descricao, 'preco': preco}
         arvore = insere(arvore, produto)
         id+= 1
-        
+
     elif opc == 2:
       id_produto = int(input("Informe o id do produto a ser removido: "))    
       arvore = remove(arvore, id_produto)
