@@ -47,7 +47,7 @@ class ArvoreJogos:
     
     while no_atual is not None:
         if no_atual.jogo.preco == preco:
-            jogos_encontrados.append(no_atual.jogo.titulo)  
+            jogos_encontrados.append(no_atual.jogo)  
         
         if preco < no_atual.jogo.preco:
             no_atual = no_atual.esq
@@ -55,12 +55,11 @@ class ArvoreJogos:
             no_atual = no_atual.dir
 
     if jogos_encontrados:
-        for titulo in jogos_encontrados:
-            print(titulo)
+        for jogo in jogos_encontrados:
+            print("ID", jogo.jogo_id, ", TITULO:", jogo.titulo, ", Desenvolvedor: ", jogo.desenvolvedor,", PRECO: R$", jogo.preco, ", GENERO:", jogo.genero)
     else:
         print("::NENHUM JOGO FOI ENCONTRADO COM O PRECO INFORMADO!::")
     
-
   def busca_por_faixa_preco(self, preco_minimo, preco_maximo):
     no_atual = self.raiz
     ids_percorridos = []
@@ -70,7 +69,9 @@ class ArvoreJogos:
           return
       
       if preco_minimo <= no.jogo.preco <= preco_maximo and no.jogo.jogo_id not in ids_percorridos:
-          print(no.jogo.titulo) 
+          # print(no.jogo.titulo) 
+          print("ID", no.jogo.jogo_id, ", TITULO:", no.jogo.titulo, ", Desenvolvedor: ", no.jogo.desenvolvedor,", PRECO: R$", no.jogo.preco, ", GENERO:", no.jogo.genero)
+
           ids_percorridos.append(no.jogo.jogo_id)
       
       if preco_minimo < no.jogo.preco:
@@ -93,19 +94,22 @@ class HashGeneros:
   
   def inserir_por_genero(self, jogo):
       indice = self.funcao_hash(jogo.genero)
-
       self.genero_para_jogos[indice].append(jogo)
 
   def obter_jogos(self, genero):
-      indice = self.funcao_hash(genero)
-      for i in range(len(self.genero_para_jogos[indice])):
-        if self.genero_para_jogos[indice][i].genero == genero:
-          print(self.genero_para_jogos[indice][i].titulo)
+    v = False
+    indice = self.funcao_hash(genero)
+    for i in range(len(self.genero_para_jogos[indice])):
+      if self.genero_para_jogos[indice][i].genero == genero:
+        print("ID: ", self.genero_para_jogos[indice][i].jogo_id, ", TITULO: ", self.genero_para_jogos[indice][i].titulo, ", PRECO: ", self.genero_para_jogos[indice][i].preco, ", DESENVOLVEDOR: ", self.genero_para_jogos[indice][i].desenvolvedor, ", GENERO: ", self.genero_para_jogos[indice][i].genero )
+        v = True
+    if v == False:
+      print(f"::NENHUM JOGO ENCONTRADO COM O GENERO {genero}::")
 
 def em_ordem(no):
   if no is not None:
     em_ordem(no.esq)  
-    print(no.jogo.titulo, ", PRECO:", no.jogo.preco, ", ID:", no.jogo.jogo_id, "\n")  
+    print("ID", no.jogo.jogo_id, ", TITULO:", no.jogo.titulo, ", Desenvolvedor: ", no.jogo.desenvolvedor,", PRECO: R$", no.jogo.preco, ", GENERO:", no.jogo.genero)
     em_ordem(no.dir) 
 
 def imprimir_tabela_hash(tabela):
@@ -115,7 +119,7 @@ def imprimir_tabela_hash(tabela):
             for jogo in jogos:
                 print(f"  - {jogo.titulo} ({jogo.genero})")
         else:
-            print("  Nenhum jogo")
+            print("Nenhum jogo")
         print()
 
 def main():
@@ -204,12 +208,12 @@ def main():
   
   id = 100
   opc = 0
-  while opc != 5:
-    print("\n1- ADICIONAR JOGO ", "\n2- BUSCAR JOGO POR PRECO", "\n3- BUSCAR JOGOS PRO FAIXA DE PRECO", "\n4- LISTAR TODOS OS JOGOS EM ORDEM DE PRECO","\n5- BUSCAR JOGO POR GENERO", "\n6- SAIR")
+  while opc != 6:
+    print("\n::MENU::", "\n1- ADICIONAR JOGO ", "\n2- BUSCAR JOGO POR PRECO", "\n3- BUSCAR JOGOS PRO FAIXA DE PRECO", "\n4- LISTAR TODOS OS JOGOS EM ORDEM DE PRECO","\n5- BUSCAR JOGO POR GENERO", "\n6- SAIR")
     opc = int(input("Informe a opcao desejada: "))
 
     if opc == 1:
-      print("\n")
+      print("\n::Informe essas informacoes sobre o jogo::")
       nome_jogo = str(input("Informe o titulo do jogo: "))
       desenvolvedor = str(input("Informe o desenvolvedor: "))
       preco = float(input("Informe o preco do jogo: "))
@@ -220,21 +224,19 @@ def main():
       print("::JOGO ADICIONADO COM SUCESSO!::")
     
     elif opc == 2:
-      print("\n")
-      preco_buscar = float(input("Informe o preco que deseja pesquisar: R$"))
+      preco_buscar = float(input("\nInforme o preco que deseja pesquisar: R$"))
       catalogo.catalogo_jogos.buscar_por_preco(preco_buscar)
       print("::JOGO ENCONTRADO::")
       
 
     elif opc == 3:
-      print("\n")
-      preco_minimo = float(input("Infome o valor minimo: R$"))
+      preco_minimo = float(input("\nInfome o valor minimo: R$"))
       preco_maximo = float(input("Informe o valor maximo: R$"))
       print("::LISTA DE JOGOS ENTRE R$", preco_minimo, "E R$", preco_maximo, "::")
       catalogo.catalogo_jogos.busca_por_faixa_preco(preco_minimo, preco_maximo)
     
     elif opc == 4:
-      print("\n::LISTA DE JOGOS::")
+      print("\n::LISTA DE JOGOS EM ORDEM::")
       em_ordem(catalogo.catalogo_jogos.raiz)
 
     elif opc == 5:
@@ -243,8 +245,7 @@ def main():
       catalogo.generos.obter_jogos(genero_busca)
 
     elif opc == 6:
-      print("Saindo...")
-      break  
+      print("Saindo...")  
 
     else:
       print("::OPCAO INVALIDA!::")
